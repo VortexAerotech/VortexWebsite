@@ -6,16 +6,24 @@ type Props = {
   alt: string;
   label: string;
   className?: string;
+  sizes?: string;
 };
 
-export default function PlaceholderImage({ src, alt, label, className = "" }: Props) {
+export default function PlaceholderImage({
+  src,
+  alt,
+  label,
+  className = "",
+  sizes = "100vw",
+}: Props) {
   if (src) {
     return (
       <Image
         src={src}
         alt={alt}
         fill
-        sizes="(max-width: 768px) 100vw, 50vw"
+        quality={90}
+        sizes={sizes}
         className={`object-cover ${className}`}
       />
     );
