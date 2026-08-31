@@ -10,6 +10,8 @@ import { urlForImage } from "@/sanity/lib/image";
 
 const SLOGAN = "Spyt kom altyd te laat, so laat ons liewer vroeg kom spuit!";
 
+export const revalidate = 60;
+
 export default async function Home() {
   const images = await getSiteImages();
 
