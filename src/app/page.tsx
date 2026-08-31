@@ -32,9 +32,9 @@ export default async function Home() {
               src={heroImageUrl}
               alt="Drone spuit oor gewasse"
               label="Held-foto volg"
-              className="opacity-70"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-background via-background/85 to-background/20" />
+            <div className="absolute inset-0 bg-gradient-to-r from-background via-background/50 to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent" />
           </div>
 
           <div className="relative z-10 mx-auto flex w-full max-w-[1280px] flex-col items-start gap-6 px-4 md:px-16">
