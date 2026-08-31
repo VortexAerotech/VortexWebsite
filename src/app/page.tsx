@@ -1,116 +1,187 @@
+import { Droplet, Wheat, Sprout, ArrowDown } from "lucide-react";
+import Nav from "./components/Nav";
+import Footer from "./components/Footer";
 import WhatsAppButton from "./components/WhatsAppButton";
 import LeadForm from "./components/LeadForm";
+import ServiceCard from "./components/ServiceCard";
+import PlaceholderImage from "./components/PlaceholderImage";
+import { getSiteImages } from "@/sanity/lib/queries";
+import { urlForImage } from "@/sanity/lib/image";
 
 const SLOGAN = "Spyt kom altyd te laat, so laat ons liewer vroeg kom spuit!";
 
-export default function Home() {
+export default async function Home() {
+  const images = await getSiteImages();
+
+  const heroImageUrl = urlForImage(images.heroImage)?.width(1920).height(1080).url();
+  const sprayingImageUrl = urlForImage(images.serviceSprayingImage)?.width(600).height(400).url();
+  const spreadingImageUrl = urlForImage(images.serviceSpreadingImage)?.width(600).height(400).url();
+  const vegetationImageUrl = urlForImage(images.serviceVegetationImage)?.width(600).height(400).url();
+  const trustImageUrl = urlForImage(images.trustImage)?.width(1200).height(675).url();
+
   return (
-    <main className="flex flex-col bg-neutral-950 text-white">
-      {/* 1. Hero */}
-      <section className="flex min-h-screen flex-col items-center justify-center px-6 text-center">
-        <p className="mb-4 text-sm font-medium uppercase tracking-[0.3em] text-white/50">
-          Vortex Aerotech
-        </p>
-        <h1 className="max-w-3xl text-3xl font-semibold leading-tight sm:text-5xl">
-          {SLOGAN}
-        </h1>
-        <p className="mt-6 max-w-xl text-lg text-white/60">
-          Professionele dronespuitwerk en -strooiing vir plase in Limpopo,
-          Noordwes en Gauteng.
-        </p>
-        <WhatsAppButton className="mt-10" />
-      </section>
+    <>
+      <Nav />
+      <main className="flex flex-col">
+        {/* 1. Hero */}
+        <section className="relative flex min-h-[90vh] items-center justify-center overflow-hidden border-b border-border-muted pt-20">
+          <div className="absolute inset-0 z-0">
+            <PlaceholderImage
+              src={heroImageUrl}
+              alt="Drone spuit oor gewasse"
+              label="Held-foto volg"
+              className="opacity-70"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-background via-background/85 to-background/20" />
+          </div>
 
-      {/* 2. What We Do */}
-      <section className="border-t border-white/10 px-6 py-24">
-        <div className="mx-auto max-w-3xl">
-          <h2 className="text-2xl font-semibold sm:text-3xl">Wat ons doen</h2>
-          <div className="mt-8 grid gap-8 sm:grid-cols-2">
-            <div>
-              <h3 className="font-medium text-white/90">Spuitwerk</h3>
-              <p className="mt-2 text-white/60">
-                Gewasbeskerming, weiveld en bosbeheer, ook in moeilik-bereikbare
-                terrein.
-              </p>
+          <div className="relative z-10 mx-auto flex w-full max-w-[1280px] flex-col items-start gap-6 px-4 md:px-16">
+            <h1 className="max-w-3xl text-4xl font-extrabold leading-tight text-on-surface sm:text-6xl">
+              Spyt kom altyd te laat,
+              <br />
+              <span className="text-safety-orange">so laat ons liewer vroeg kom spuit!</span>
+            </h1>
+            <p className="max-w-2xl border-l-2 border-safety-orange pl-4 text-lg text-on-surface-variant">
+              Professionele dronespuitwerk en -strooiing vir plase in Limpopo,
+              Noordwes en Gauteng.
+            </p>
+            <div className="mt-4 flex w-full flex-col gap-4 sm:w-auto sm:flex-row">
+              <WhatsAppButton />
+              <a
+                href="#wat-ons-doen"
+                className="inline-flex items-center justify-center gap-2 rounded border border-border-muted px-8 py-4 font-mono text-sm tracking-[0.08em] text-on-surface uppercase transition-colors hover:border-safety-orange hover:text-safety-orange"
+              >
+                Ons Dienste
+                <ArrowDown className="h-4 w-4" />
+              </a>
             </div>
-            <div>
-              <h3 className="font-medium text-white/90">Strooiing</h3>
-              <p className="mt-2 text-white/60">
-                Kunsmis en saad strooiing, onderhewig aan T100-geskiktheid.
-              </p>
+          </div>
+        </section>
+
+        {/* 2. What We Do */}
+        <section className="bg-topo bg-surface px-4 py-20 md:px-16 md:py-28" id="wat-ons-doen">
+          <div className="mx-auto max-w-[1280px]">
+            <div className="mb-16 flex flex-col items-center text-center">
+              <span className="mb-2 font-mono text-sm tracking-[0.2em] text-safety-orange uppercase">
+                Wat Ons Doen
+              </span>
+              <h2 className="text-3xl font-bold text-on-surface sm:text-4xl">Ons Dienste</h2>
+            </div>
+
+            <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
+              <ServiceCard
+                icon={Droplet}
+                title="Spuitwerk"
+                description="Gewasbeskerming, weiveld en bosbeheer, ook in moeilik-bereikbare terrein."
+                imageLabel="Spuitwerk-foto volg"
+                imageSrc={sprayingImageUrl}
+              />
+              <ServiceCard
+                icon={Wheat}
+                title="Strooiwerk"
+                description="Kunsmis en saad strooiing, onderhewig aan T100-geskiktheid."
+                imageLabel="Strooiwerk-foto volg"
+                imageSrc={spreadingImageUrl}
+              />
+              <ServiceCard
+                icon={Sprout}
+                title="Bosbeheer"
+                description="Bos- en plantegroeibeheer op plase, weivelde en moeilike terrein."
+                imageLabel="Bosbeheer-foto volg"
+                imageSrc={vegetationImageUrl}
+              />
+            </div>
+
+            <p className="mt-10 max-w-2xl text-sm text-on-surface-variant/70">
+              Ons pas produk toe volgens jou of jou adviseur se instruksies —
+              ons verkoop nie chemikalieë nie en gee nie voorskrifte nie.
+            </p>
+          </div>
+        </section>
+
+        {/* 3. Why a Drone */}
+        <section className="border-t border-border-muted px-4 py-20 md:px-16 md:py-28" id="hoekom-drone">
+          <div className="mx-auto max-w-[1280px]">
+            <span className="mb-2 block font-mono text-sm tracking-[0.2em] text-safety-orange uppercase">
+              Hoekom &apos;n Drone
+            </span>
+            <h2 className="mb-8 text-3xl font-bold text-on-surface sm:text-4xl">
+              Die regte werktuig, op die regte tyd
+            </h2>
+            <ul className="grid gap-4 sm:grid-cols-3">
+              {[
+                "Nat lande waar trekkers en spuiters vassit",
+                "Moeilike terrein en oneweredige grond",
+                "Swak toegang tot sommige kampe of blokke",
+              ].map((item) => (
+                <li
+                  key={item}
+                  className="rounded border border-border-muted bg-surface-container px-6 py-5 text-on-surface-variant"
+                >
+                  {item}
+                </li>
+              ))}
+            </ul>
+            <p className="mt-8 max-w-2xl text-sm text-on-surface-variant/70">
+              &apos;n Drone is nie altyd vinniger of goedkoper as konvensionele
+              toerusting nie — dit is die regte werktuig wanneer die
+              omstandighede dit vra, en ons sal dit eerlik vir jou sê.
+            </p>
+          </div>
+        </section>
+
+        {/* 4. Trust Signals */}
+        <section className="border-t border-border-muted px-4 py-20 md:px-16 md:py-28" id="vertroue">
+          <div className="mx-auto max-w-[1280px]">
+            <span className="mb-2 block font-mono text-sm tracking-[0.2em] text-safety-orange uppercase">
+              Vertroue
+            </span>
+            <h2 className="mb-8 text-3xl font-bold text-on-surface sm:text-4xl">
+              DJI AGRAS T100
+            </h2>
+            <div className="relative aspect-video w-full overflow-hidden rounded border border-border-muted">
+              <PlaceholderImage
+                src={trustImageUrl}
+                alt="DJI AGRAS T100 drone toerusting"
+                label="Toerusting-foto volg"
+              />
             </div>
           </div>
-          <p className="mt-8 text-sm text-white/50">
-            Ons pas produk toe volgens jou of jou adviseur se instruksies — ons
-            verkoop nie chemikalieë nie en gee nie voorskrifte nie.
-          </p>
-        </div>
-      </section>
+        </section>
 
-      {/* 3. Why a Drone */}
-      <section className="border-t border-white/10 px-6 py-24">
-        <div className="mx-auto max-w-3xl">
-          <h2 className="text-2xl font-semibold sm:text-3xl">Hoekom &apos;n dronie</h2>
-          <ul className="mt-8 space-y-4 text-white/70">
-            <li>• Nat lande waar trekkers en spuiters vassit</li>
-            <li>• Moeilike terrein en oneweredige grond</li>
-            <li>• Swak toegang tot sommige kampe of blokke</li>
-          </ul>
-          <p className="mt-8 text-sm text-white/50">
-            &apos;n Dronie is nie altyd vinniger of goedkoper as konvensionele
-            toerusting nie — dit is die regte werktuig wanneer die
-            omstandighede dit vra, en ons sal dit eerlik vir jou sê.
-          </p>
-        </div>
-      </section>
-
-      {/* 4. Trust Signals */}
-      <section className="border-t border-white/10 px-6 py-24">
-        <div className="mx-auto max-w-3xl">
-          <h2 className="text-2xl font-semibold sm:text-3xl">Vertroue</h2>
-          <div className="mt-8 flex aspect-video w-full items-center justify-center rounded-2xl border border-white/10 bg-white/5 text-white/40">
-            DJI AGRAS T100 foto volg
+        {/* 5. Service Area */}
+        <section className="border-t border-border-muted px-4 py-20 md:px-16 md:py-28" id="diensarea">
+          <div className="mx-auto max-w-[1280px]">
+            <span className="mb-2 block font-mono text-sm tracking-[0.2em] text-safety-orange uppercase">
+              Diensarea
+            </span>
+            <h2 className="mb-4 text-3xl font-bold text-on-surface sm:text-4xl">
+              Limpopo · Noordwes · Gauteng
+            </h2>
+            <p className="max-w-xl text-on-surface-variant/70">
+              Oop vir reis elders in Suid-Afrika wanneer die werk dit
+              regverdig.
+            </p>
           </div>
-          <p className="mt-6 text-white/60">
-            Praktiese plaas- en droon-ervaring — geen oordrywing, net werk wat
-            gedoen moet word.
-          </p>
-          <div className="mt-8 grid gap-4 border-t border-white/10 pt-8 text-sm text-white/60 sm:grid-cols-3">
-            <p>✓ Weer word gecheck</p>
-            <p>✓ Wind word gemeet</p>
-            <p>✓ Voorvlug-inspeksie elke keer</p>
-          </div>
-        </div>
-      </section>
+        </section>
 
-      {/* 5. Service Area */}
-      <section className="border-t border-white/10 px-6 py-24">
-        <div className="mx-auto max-w-3xl">
-          <h2 className="text-2xl font-semibold sm:text-3xl">Diensarea</h2>
-          <p className="mt-4 text-white/70">
-            Primêr: Limpopo, Noordwes en Gauteng.
-          </p>
-          <p className="mt-2 text-white/50">
-            Oop vir reis elders in Suid-Afrika wanneer die werk dit regverdig.
-          </p>
-        </div>
-      </section>
-
-      {/* 6. Final CTA */}
-      <section className="border-t border-white/10 px-6 py-24">
-        <div className="mx-auto flex max-w-3xl flex-col items-center text-center">
-          <h2 className="max-w-xl text-2xl font-semibold sm:text-3xl">
-            {SLOGAN}
-          </h2>
-          <WhatsAppButton className="mt-8" />
-          <p className="mt-10 text-sm text-white/50">
-            Verkies liewer om te wag vir &apos;n oproep? Los jou besonderhede:
-          </p>
-          <div className="mt-4">
-            <LeadForm />
+        {/* 6. Final CTA */}
+        <section className="bg-topo bg-surface-container-low border-t border-border-muted px-4 py-20 md:px-16 md:py-28" id="kontak">
+          <div className="mx-auto flex max-w-[1280px] flex-col items-center text-center">
+            <h2 className="max-w-xl text-3xl font-bold text-on-surface sm:text-4xl">
+              {SLOGAN}
+            </h2>
+            <WhatsAppButton className="mt-8" />
+            <p className="mt-10 text-sm text-on-surface-variant/70">
+              Verkies liewer om te wag vir &apos;n oproep? Los jou besonderhede:
+            </p>
+            <div className="mt-4">
+              <LeadForm />
+            </div>
           </div>
-        </div>
-      </section>
-    </main>
+        </section>
+      </main>
+      <Footer />
+    </>
   );
 }

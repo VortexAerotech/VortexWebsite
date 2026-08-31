@@ -40,7 +40,11 @@ export default function LeadForm() {
   }
 
   if (status === "success") {
-    return <p className="text-lg font-medium text-emerald-400">{message}</p>;
+    return (
+      <p className="rounded border border-safety-orange/40 bg-surface-container px-6 py-4 font-medium text-safety-orange">
+        {message}
+      </p>
+    );
   }
 
   return (
@@ -51,7 +55,7 @@ export default function LeadForm() {
         value={name}
         onChange={(e) => setName(e.target.value)}
         placeholder="Naam"
-        className="rounded-full border border-white/15 bg-white/5 px-5 py-3 text-white placeholder-white/40 outline-none focus:border-white/40"
+        className="rounded border border-border-muted bg-surface-container px-5 py-3 text-on-surface placeholder-on-surface-variant/50 outline-none focus:border-safety-orange"
       />
       <input
         type="text"
@@ -59,16 +63,16 @@ export default function LeadForm() {
         value={contact}
         onChange={(e) => setContact(e.target.value)}
         placeholder="Kontaknommer of e-pos"
-        className="rounded-full border border-white/15 bg-white/5 px-5 py-3 text-white placeholder-white/40 outline-none focus:border-white/40"
+        className="rounded border border-border-muted bg-surface-container px-5 py-3 text-on-surface placeholder-on-surface-variant/50 outline-none focus:border-safety-orange"
       />
       <button
         type="submit"
         disabled={status === "loading"}
-        className="rounded-full bg-white px-6 py-3 font-medium text-black transition-colors hover:bg-white/85 disabled:opacity-50"
+        className="rounded bg-safety-orange px-6 py-3 font-mono text-sm font-bold tracking-[0.08em] text-field-white uppercase transition-opacity hover:opacity-90 disabled:opacity-50"
       >
-        {status === "loading" ? "Stuur..." : "Vra vir 'n terugbel"}
+        {status === "loading" ? "Stuur..." : "Vra vir 'n Terugbel"}
       </button>
-      {status === "error" && <p className="text-sm text-red-400">{message}</p>}
+      {status === "error" && <p className="text-sm text-error">{message}</p>}
     </form>
   );
 }
